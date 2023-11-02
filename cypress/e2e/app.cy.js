@@ -31,6 +31,21 @@ describe("Youtube App", () => {
   it("shows popluar video first", () => {
     cy.findByText("Popular Video").should("exist");
   });
+
+  // 키워드로 검색하는 경우
+  it("searches by keyword", () => {
+    cy.findByPlaceholderText("Search...").type("bts"); // bts라고 type을 한다
+    cy.findByRole("button").click(); // 버튼의 역할을 하고 있는 것을 가져와서 클릭한다
+    cy.findByText("Search Result1").should("exist");
+  });
+
+  // 디테일 페이지로 잘 가는지 확인
+  it("goes to detail page", () => {
+    cy.findAllByRole("listitem").first().click();
+    cy.findByTitle("Popular Video").should("exist");
+    cy.findByText("Popular Video").should("exist");
+    cy.findByText("Search Result1").should("exist");
+  });
 });
 
 /**
